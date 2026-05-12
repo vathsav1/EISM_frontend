@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f7fa;
+  font-family: "Inter", sans-serif;
+}
+
+/* HEADER */
+
+.header {
+  height: 80px;
+  background: #032b3a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+}
+
+.logo span {
+  color: #63d246;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links p {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* MAIN LAYOUT */
+
+.page-container {
+  min-height: 100vh;
+}
+
+.auth-layout {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+/* LEFT */
+
+.left-section {
+  flex: 1;
+  background: #032b3a;
+  color: white;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left-section h1 {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 20px;
+  margin-bottom: 50px;
+  color: #d3d3d3;
+}
+
+.feature-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.feature-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.feature-icon {
+  color: #63d246;
+  font-size: 40px;
+}
+
+/* RIGHT */
+
+.right-section {
+  flex: 1;
+  background: #032b3a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 550px;
+  background: white;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* FORM */
+
+.form-title {
+  font-weight: 700 !important;
+}
+
+.switch-text {
+  margin-top: 15px !important;
+}
+
+.switch-text span {
+  color: #0077b6;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-button {
+  background: #63d246 !important;
+  color: black !important;
+  padding: 14px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  border-radius: 10px !important;
+}
+
+.auth-button:hover {
+  background: #52bb39 !important;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .left-section {
+    display: none;
+  }
+
+  .right-section {
+    width: 100%;
+  }
+
+  .header {
+    padding: 0 20px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
