@@ -24,6 +24,7 @@ const DashboardPage = () => {
         {/* SIDEBAR */}
 
         <Sidebar
+          
           activeMenu={activeMenu}
           setActiveMenu={setActiveMenu}
         />
