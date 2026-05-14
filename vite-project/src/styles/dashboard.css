@@ -1,10 +1,15 @@
 .dashboard-page {
   min-height: 100vh;
   background: #f4f7fa;
+  overflow-x: hidden;
 }
+
+/* LAYOUT */
 
 .dashboard-layout {
   display: flex;
+  width: 100%;
+  min-width: 0;
   height: calc(100vh - 80px);
 }
 
@@ -12,14 +17,17 @@
 
 .sidebar {
   width: 260px;
+  min-width: 260px;
   background: #1f414d;
   color: white;
   padding-top: 30px;
   transition: 0.3s;
+  overflow: hidden;
 }
 
 .sidebar.collapsed {
   width: 90px;
+  min-width: 90px;
 }
 
 .sidebar-item {
@@ -51,8 +59,11 @@
 
 .main-section {
   flex: 1;
+  width: 100%;
+  min-width: 0;
   padding: 25px;
   position: relative;
+  overflow-x: auto;
 }
 
 /* TOP ACTIONS */
@@ -94,6 +105,8 @@
 
 .dashboard-content {
   margin-top: 30px;
+  width: 100%;
+  min-width: 0;
 }
 
 .content-card {
@@ -114,17 +127,122 @@
   font-size: 18px;
 }
 
+/* TMS */
+
+.tms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.tms-header h1 {
+  color: #032b3a;
+}
+
+
+
+/* dashboard */
+/* WELCOME */
+
+.welcome-banner {
+  padding: 35px;
+  border-radius: 24px !important;
+  background: linear-gradient(
+    135deg,
+    #032b3a,
+    #1f414d
+  ) !important;
+  color: white !important;
+}
+
+.welcome-title {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+}
+
+.welcome-subtitle {
+  margin-top: 10px !important;
+  opacity: 0.85;
+}
+
+/* STATS */
+
+.stats-card {
+  margin-top: 20px;
+  padding: 30px;
+  border-radius: 22px !important;
+  box-shadow: 0 8px 20px
+    rgba(0, 0, 0, 0.05) !important;
+}
+
+.stats-title {
+  color: #666;
+  font-size: 15px !important;
+}
+
+.stats-value {
+  font-size: 38px !important;
+  font-weight: 700 !important;
+  margin-top: 15px !important;
+  color: #032b3a;
+}
+
+/* QUICK ACTIONS */
+
+.quick-actions {
+  margin-top: 30px;
+  padding: 30px;
+  border-radius: 22px !important;
+}
+
+.quick-title {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #032b3a;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 900px) {
+
+  .dashboard-layout {
+    position: relative;
+  }
+
   .sidebar {
-    position: absolute;
-    z-index: 100;
+    position: fixed;
+    z-index: 1000;
     height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .main-section {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    margin-left: 90px
+  }
+
+
+  .dashboard-content {
+    width: 100%;
+    min-width: 0;
   }
 
   .notification-popup {
     right: 10px;
     width: 250px;
+  }
+
+  .content-card {
+    padding: 25px;
+  }
+
+  .tms-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

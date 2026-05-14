@@ -1,0 +1,63 @@
+/* TABLE CONTAINER */
+
+.ticket-table-container {
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+/* DATAGRID */
+
+.ticket-data-grid {
+  min-width: 1200px;
+  border: none !important;
+}
+
+/* HEADER */
+
+.ticket-data-grid .MuiDataGrid-columnHeaders {
+  background: #f4f7fa;
+  font-weight: 700;
+  border-bottom: none;
+}
+
+/* ROWS */
+
+.ticket-data-grid .MuiDataGrid-row {
+  min-height: 65px !important;
+}
+
+/* CELLS */
+
+.ticket-data-grid .MuiDataGrid-cell {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* REMOVE OUTLINE */
+
+.ticket-data-grid .MuiDataGrid-cell:focus,
+.ticket-data-grid .MuiDataGrid-columnHeader:focus {
+  outline: none;
+}
+
+/* FOOTER */
+
+.ticket-data-grid .MuiDataGrid-footerContainer {
+  border-top: none;
+}
+
+/* SCROLLBAR */
+
+.ticket-table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.ticket-table-container::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 10px;
+}
