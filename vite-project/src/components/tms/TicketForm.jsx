@@ -1,436 +1,471 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+  import React, {
+    useEffect,
+    useState,
+  } from "react";
 
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from "@mui/material";
+  import {
+    Box,
+    Button,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack,
+    TextField,
+  } from "@mui/material";
 
-import {
-  CATEGORY_OPTIONS,
-  IMPACT_OPTIONS,
-  TICKET_TYPES,
-  URGENCY_OPTIONS,
-  USERS,
-} from "../../constants/ticketConstants.js";
+  import Typography from "@mui/material/Typography";
 
-import usePriorityCalculator from "../../hooks/usePriorityCalculator.js";
+  import {
+    CATEGORY_OPTIONS,
+    IMPACT_OPTIONS,
+    TICKET_TYPES,
+    URGENCY_OPTIONS,
+    USERS,
+  } from "../../constants/ticketConstants.js";
 
-import useTicketStore from "../../store/ticketStore.js";
 
-import { generateTicketNumber } from "../../utils/generateTicketNumber.js";
+  import usePriorityCalculator from "../../hooks/usePriorityCalculator.js";
 
-const TicketForm = ({ handleClose }) => {
+  import useTicketStore from "../../store/ticketStore.js";
 
-  const { addTicket } = useTicketStore();
+  import { generateTicketNumber } from "../../utils/generateTicketNumber.js";
 
-  const { calculatePriority } =
-    usePriorityCalculator();
+  import "../../styles/ticketform.css"
 
-  const [formData, setFormData] =
-    useState({
-      title: "",
-      otherTitle: "",
-      requestedFor: "",
-      description: "",
-      category: "",
-      urgency: "",
-      impact: "",
-      priority: "P4",
-      attachments: null,
-      additionalNotes: "",
-    });
+  const TicketForm = ({ handleClose }) => {
 
-  useEffect(() => {
+    const { addTicket } = useTicketStore();
 
-    const priority = calculatePriority(
+    const { calculatePriority } =
+      usePriorityCalculator();
+
+    const [formData, setFormData] =
+      useState({
+        title: "",
+        otherTitle: "",
+        requestedFor: "",
+        description: "",
+        category: "",
+        urgency: "",
+        impact: "",
+        priority: "P4",
+        attachments: null,
+        additionalNotes: "",
+      });
+
+    useEffect(() => {
+
+      const priority = calculatePriority(
+        formData.urgency,
+        formData.impact
+      );
+
+      setFormData((prev) => ({
+        ...prev,
+        priority,
+      }));
+
+    }, [
       formData.urgency,
-      formData.impact
-    );
+      formData.impact,
+    ]);
 
-    setFormData((prev) => ({
-      ...prev,
-      priority,
-    }));
+    const handleChange = (e) => {
 
-  }, [
-    formData.urgency,
-    formData.impact,
-  ]);
+      const { name, value } = e.target;
 
-  const handleChange = (e) => {
-
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-
-    setFormData({
-      ...formData,
-      attachments: e.target.files,
-    });
-  };
-
-  const handleSubmit = () => {
-
-    const newTicket = {
-
-      id: Date.now(),
-
-      ticketNumber:
-        generateTicketNumber(),
-
-      title:
-        formData.title === "Others"
-          ? formData.otherTitle
-          : formData.title,
-
-      category: formData.category,
-
-      requestedFor:
-        formData.requestedFor,
-
-      description:
-        formData.description,
-
-      urgency: formData.urgency,
-
-      impact: formData.impact,
-
-      priority: formData.priority,
-
-      assignedTo: "-",
-
-      status: "Open",
-
-      attachments:
-        formData.attachments
-          ? "Attached"
-          : "No Attachments",
-
-      additionalNotes:
-        formData.additionalNotes,
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
     };
 
-    addTicket(newTicket);
+    const handleFileChange = (e) => {
 
-    handleClose();
-  };
+      setFormData({
+        ...formData,
+        attachments: e.target.files,
+      });
+    };
 
-  return (
-    <Box mt={2}>
+    const handleSubmit = () => {
 
-      <Grid container spacing={3}>
+      if (
+        !formData.title ||
+        !formData.requestedFor ||
+        !formData.category ||
+        !formData.urgency ||
+        !formData.impact
+      ) {
 
-        {/* TITLE */}
+        alert("Please fill all required fields");
+        return;
+      }
 
-        <Grid item xs={12} md={6}>
+      const newTicket = {
 
-          <FormControl fullWidth>
 
-            <InputLabel>
-              Title
-            </InputLabel>
+        id: Date.now(),
 
-            <Select
-              name="title"
-              label="Title"
-              value={formData.title}
-              onChange={handleChange}
-            >
+        ticketNumber:
+          generateTicketNumber(),
 
-              {TICKET_TYPES.map(
-                (type, index) => (
-                  <MenuItem
-                    key={index}
-                    value={type}
-                  >
-                    {type}
-                  </MenuItem>
-                )
-              )}
+        title:
+          formData.title === "Others"
+            ? formData.otherTitle
+            : formData.title,
 
-            </Select>
+        category: formData.category,
 
-          </FormControl>
+        requestedFor:
+          formData.requestedFor,
 
-        </Grid>
+        createdBy : "sample",
 
-        {/* OTHER TITLE */}
+        description:
+          formData.description,
 
-        {formData.title === "Others" && (
+        urgency: formData.urgency,
 
-          <Grid item xs={12} md={6}>
+        impact: formData.impact,
 
-            <TextField
-              fullWidth
-              label="Specify Other"
-              name="otherTitle"
-              value={
-                formData.otherTitle
-              }
-              onChange={handleChange}
-            />
+        priority: formData.priority,
 
-          </Grid>
+        assignedTo: "-",
 
-        )}
+        status: "Open",
 
-        {/* REQUESTED FOR */}
+        attachments:
+          formData.attachments
+            ? "Attached"
+            : "No Attachments",
 
-        <Grid item xs={12} md={6}>
+        additionalNotes:
+          formData.additionalNotes,
+      };
 
-          <FormControl fullWidth>
+      addTicket(newTicket);
 
-            <InputLabel>
-              Requested For
-            </InputLabel>
+      handleClose();
+    };
 
-            <Select
-              name="requestedFor"
-              label="Requested For"
-              value={
-                formData.requestedFor
-              }
-              onChange={handleChange}
-            >
+    return (
+  <Box mt={3}>
 
-              {USERS.map(
-                (user, index) => (
-                  <MenuItem
-                    key={index}
-                    value={user}
-                  >
-                    {user}
-                  </MenuItem>
-                )
-              )}
+  <Typography
+    variant="h6"
+    mb={4}
+    fontWeight={700}
+  >
+    Ticket Information
+  </Typography>
 
-            </Select>
+  {/* ROW 1 */}
 
-          </FormControl>
+  <Box className="form-row">
 
-        </Grid>
+    <FormControl fullWidth required>
 
-        {/* CATEGORY */}
+      <InputLabel>
+        Title
+      </InputLabel>
 
-        <Grid item xs={12} md={6}>
-
-          <FormControl fullWidth>
-
-            <InputLabel>
-              Category
-            </InputLabel>
-
-            <Select
-              name="category"
-              label="Category"
-              value={
-                formData.category
-              }
-              onChange={handleChange}
-            >
-
-              {CATEGORY_OPTIONS.map(
-                (category, index) => (
-                  <MenuItem
-                    key={index}
-                    value={category}
-                  >
-                    {category}
-                  </MenuItem>
-                )
-              )}
-
-            </Select>
-
-          </FormControl>
-
-        </Grid>
-
-        {/* DESCRIPTION */}
-
-        <Grid item xs={12}>
-
-          <TextField
-            fullWidth
-            multiline
-            rows={4}
-            label="Description"
-            name="description"
-            value={
-              formData.description
-            }
-            onChange={handleChange}
-          />
-
-        </Grid>
-
-        {/* URGENCY */}
-
-        <Grid item xs={12} md={4}>
-
-          <FormControl fullWidth>
-
-            <InputLabel>
-              Urgency
-            </InputLabel>
-
-            <Select
-              name="urgency"
-              label="Urgency"
-              value={
-                formData.urgency
-              }
-              onChange={handleChange}
-            >
-
-              {URGENCY_OPTIONS.map(
-                (urgency, index) => (
-                  <MenuItem
-                    key={index}
-                    value={urgency}
-                  >
-                    {urgency}
-                  </MenuItem>
-                )
-              )}
-
-            </Select>
-
-          </FormControl>
-
-        </Grid>
-
-        {/* IMPACT */}
-
-        <Grid item xs={12} md={4}>
-
-          <FormControl fullWidth>
-
-            <InputLabel>
-              Impact
-            </InputLabel>
-
-            <Select
-              name="impact"
-              label="Impact"
-              value={
-                formData.impact
-              }
-              onChange={handleChange}
-            >
-
-              {IMPACT_OPTIONS.map(
-                (impact, index) => (
-                  <MenuItem
-                    key={index}
-                    value={impact}
-                  >
-                    {impact}
-                  </MenuItem>
-                )
-              )}
-
-            </Select>
-
-          </FormControl>
-
-        </Grid>
-
-        {/* PRIORITY */}
-
-        <Grid item xs={12} md={4}>
-
-          <TextField
-            fullWidth
-            label="Priority"
-            value={
-              formData.priority
-            }
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-
-        </Grid>
-
-        {/* ATTACHMENTS */}
-
-        <Grid item xs={12}>
-
-          <TextField
-            fullWidth
-            type="file"
-            inputProps={{
-              multiple: true,
-            }}
-            onChange={handleFileChange}
-          />
-
-        </Grid>
-
-        {/* ADDITIONAL NOTES */}
-
-        <Grid item xs={12}>
-
-          <TextField
-            fullWidth
-            multiline
-            rows={3}
-            label="Additional Notes"
-            name="additionalNotes"
-            value={
-              formData.additionalNotes
-            }
-            onChange={handleChange}
-          />
-
-        </Grid>
-
-      </Grid>
-
-      {/* BUTTONS */}
-
-      <Stack
-        direction="row"
-        justifyContent="flex-end"
-        spacing={2}
-        mt={4}
+      <Select
+        name="title"
+        label="Title"
+        value={formData.title}
+        onChange={handleChange}
       >
 
-        <Button
-          variant="outlined"
-          onClick={handleClose}
-        >
-          Cancel
-        </Button>
+        {TICKET_TYPES.map(
+          (type, index) => (
 
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-        >
-          Submit Ticket
-        </Button>
+            <MenuItem
+              key={index}
+              value={type}
+            >
+              {type}
+            </MenuItem>
 
-      </Stack>
+          )
+        )}
+
+      </Select>
+
+    </FormControl>
+
+    <FormControl fullWidth required>
+
+      <InputLabel>
+        Requested For
+      </InputLabel>
+
+      <Select
+        name="requestedFor"
+        label="Requested For"
+        value={
+          formData.requestedFor
+        }
+        onChange={handleChange}
+      >
+
+        {USERS.map(
+          (user, index) => (
+
+            <MenuItem
+              key={index}
+              value={user}
+            >
+              {user}
+            </MenuItem>
+
+          )
+        )}
+
+      </Select>
+
+    </FormControl>
+
+  </Box>
+
+  {/* OTHER */}
+
+  {formData.title ===
+    "Others" && (
+
+    <Box mt={3}>
+
+      <TextField
+        fullWidth
+        label="Specify Other"
+        name="otherTitle"
+        value={
+          formData.otherTitle
+        }
+        onChange={handleChange}
+      />
 
     </Box>
-  );
-};
 
-export default TicketForm;
+  )}
+
+  {/* ROW 2 */}
+
+  <Box className="form-row">
+
+    <FormControl fullWidth required>
+
+      <InputLabel>
+        Category
+      </InputLabel>
+
+      <Select
+        name="category"
+        label="Category"
+        value={
+          formData.category
+        }
+        onChange={handleChange}
+      >
+
+        {CATEGORY_OPTIONS.map(
+          (
+            category,
+            index
+          ) => (
+
+            <MenuItem
+              key={index}
+              value={category}
+            >
+              {category}
+            </MenuItem>
+
+          )
+        )}
+
+      </Select>
+
+    </FormControl>
+
+    <TextField
+      fullWidth
+      label="Priority"
+      value={
+        formData.priority
+      }
+      InputProps={{
+        readOnly: true,
+      }}
+    />
+
+  </Box>
+
+  {/* ROW 3 */}
+
+  <Box className="form-row">
+
+    <FormControl fullWidth required>
+
+      <InputLabel>
+        Urgency
+      </InputLabel>
+
+      <Select
+        name="urgency"
+        label="Urgency"
+        value={
+          formData.urgency
+        }
+        onChange={handleChange}
+      >
+
+        {URGENCY_OPTIONS.map(
+          (
+            urgency,
+            index
+          ) => (
+
+            <MenuItem
+              key={index}
+              value={urgency}
+            >
+              {urgency}
+            </MenuItem>
+
+          )
+        )}
+
+      </Select>
+
+    </FormControl>
+
+    <FormControl fullWidth required>
+
+      <InputLabel>
+        Impact
+      </InputLabel>
+
+      <Select
+        name="impact"
+        label="Impact"
+        value={
+          formData.impact
+        }
+        onChange={handleChange}
+      >
+
+        {IMPACT_OPTIONS.map(
+          (
+            impact,
+            index
+          ) => (
+
+            <MenuItem
+              key={index}
+              value={impact}
+            >
+              {impact}
+            </MenuItem>
+
+          )
+        )}
+
+      </Select>
+
+    </FormControl>
+
+  </Box>
+
+  {/* DESCRIPTION */}
+
+  <Box mt={3}>
+
+    <TextField
+      fullWidth
+      multiline
+      rows={7}
+      label="Description"
+      name="description"
+      value={
+        formData.description
+      }
+      onChange={handleChange}
+    />
+
+  </Box>
+
+  {/* ATTACHMENT */}
+
+  <Box mt={6} mb={2}>
+
+    <Button
+      variant="outlined"
+      component="label"
+    >
+
+      Upload Attachments
+
+      <input
+        hidden
+        multiple
+        type="file"
+        onChange={
+          handleFileChange
+        }
+      />
+
+    </Button>
+
+  </Box>
+
+  {/* NOTES */}
+
+  <Box mt={3}>
+
+    <TextField
+      fullWidth
+      multiline
+      rows={7}
+      label="Additional Notes"
+      name="additionalNotes"
+      value={
+        formData.additionalNotes
+      }
+      onChange={handleChange}
+    />
+
+  </Box>
+
+  {/* BUTTONS */}
+
+  <Stack
+    direction="row"
+    spacing={2}
+    mt={5}
+    justifyContent="flex-end"
+  >
+
+    <Button
+      variant="outlined"
+      onClick={handleClose}
+    >
+      Cancel
+    </Button>
+
+    <Button
+      variant="contained"
+      onClick={handleSubmit}
+    >
+      Submit Ticket
+    </Button>
+
+  </Stack>
+
+</Box>
+);
+  };
+
+  export default TicketForm;

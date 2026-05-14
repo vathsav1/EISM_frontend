@@ -4,6 +4,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 
 import "../styles/dashboard.css";
 
@@ -25,7 +26,19 @@ const Sidebar = ({ activeMenu, setActiveMenu }) => {
     },
     {
       name: "Service Catalog",
+      icon: <Inventory2OutlinedIcon />,
+    },
+    {
+      name: "Admin Dashboard",
+      icon: <DashboardOutlinedIcon />,
+    },
+    {
+      name: "Admin Knowledge Base",
       icon: <MenuBookOutlinedIcon />,
+    },
+    {
+      name: "Agent Dashboard",
+      icon: <DashboardOutlinedIcon />,
     },
   ];
 
