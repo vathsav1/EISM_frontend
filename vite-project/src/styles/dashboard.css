@@ -141,9 +141,6 @@
 .tms-header h1 {
   color: #032b3a;
 }
-
-
-
 /* dashboard */
 /* WELCOME */
 
@@ -245,4 +242,93 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+
+
+
+/* admin dashboard */
+
+.admin-table-title {
+  margin-bottom: 20px;
+  color: #032b3a;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+
+/* knowledge base */
+
+/* KB HEADER */
+
+.kb-header {
+  position: relative;
+  padding: 70px 50px;
+  border-radius: 28px !important;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #0c1028,
+    #1f1f4d
+  ) !important;
+  color: white;
+}
+
+.kb-overlay {
+  position: relative;
+  z-index: 2;
+}
+
+.kb-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+}
+
+.kb-subtitle {
+  margin-top: 10px;
+  opacity: 0.85;
+  color: white;
+}
+
+.kb-search-wrapper {
+  margin-top: 35px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.kb-search {
+  background: white;
+  border-radius: 12px;
+}
+
+/* ARTICLES */
+
+.article-card {
+  padding: 25px;
+  border-radius: 20px !important;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+}
+
+.article-title {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  margin-bottom: 15px !important;
+  color: #032b3a;
+}
+
+.article-meta {
+  color: #666;
+  margin-bottom: 8px !important;
+}
+
+.kb-articles-section {
+  /* margin-top: 60px; */
+  padding: 20px;
 }

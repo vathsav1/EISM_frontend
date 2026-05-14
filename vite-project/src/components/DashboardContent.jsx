@@ -12,6 +12,10 @@ import TicketForm from "../components/tms/TicketForm";
 import WelcomeBanner from "../components/dashboard/WelcomeBanner";
 import MyTicketStats from "../components/dashboard/MyTicketStats";
 import QuickActions from "../components/dashboard/QuickActions";
+import KnowledgeBaseUser from "../pages/KnowledgeBaseUser";
+import AdminDashboard from "../pages/AdminDashboard";
+import KnowledgeBaseAdmin from "../pages/KnowledgeBaseAdmin";
+import SupportAgentDashboard from "../pages/SupportAgentDashboard";
 
 
 const DashboardContent = ({ activeMenu }) => {
@@ -59,8 +63,9 @@ const DashboardContent = ({ activeMenu }) => {
     <Dialog
       open={openModal}
       onClose={handleClose}
-      maxWidth="md"
+      maxWidth="lg"
       fullWidth
+      scroll="paper"
     >
 
       <DialogTitle>
@@ -90,10 +95,46 @@ const DashboardContent = ({ activeMenu }) => {
   </>
 )}
 
+{/*knowledge base*/}
+
+{ activeMenu === "Knowledge Base" && (
+  <>
+  <KnowledgeBaseUser />
+  </>
+)}
+
+{/* ADMIN DASHBOARD SECTION */}
+
+{ activeMenu === "Admin Dashboard" && (
+  <>
+  <AdminDashboard />
+  </>
+)}
+
+{/* ADMIN knowledge base*/}
+
+{ activeMenu === "Admin Knowledge Base" && (
+  <>
+  <KnowledgeBaseAdmin />
+  </>
+)}
+
+{/* AGENT DASHBOARD SECTION */}
+
+{ activeMenu === "Agent Dashboard" && (
+  <>
+  <SupportAgentDashboard />
+  </>
+)}
+
 {/* DEFAULT SECTION */}
 
 {activeMenu !== "TMS" &&
- activeMenu !== "Dashboard" && (
+ activeMenu !== "Dashboard" &&
+ activeMenu !== "Admin Dashboard" &&
+ activeMenu !== "Agent Dashboard" &&
+ activeMenu !== "Admin Knowledge Base" &&
+ activeMenu !== "Knowledge Base" && (
   <div className="content-card">
 
     <h1>{activeMenu}</h1>
