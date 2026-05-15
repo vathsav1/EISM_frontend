@@ -1,17 +1,47 @@
 import { create } from "zustand";
 
-const useAuthStore = create((set) => ({
-  isAuthenticated: false,
+const useAuthStore = create(
+  (set) => ({
 
-  login: () =>
-    set({
-      isAuthenticated: true,
-    }),
+    user: null,
 
-  logout: () =>
-    set({
-      isAuthenticated: false,
-    }),
-}));
+    token: null,
+
+    isAuthenticated: false,
+
+    setUser: (userData) => {
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(userData)
+      );
+
+      set({
+
+        user: userData,
+
+        token: userData.token,
+
+        isAuthenticated: true,
+      });
+    },
+
+    logout: () => {
+
+      localStorage.removeItem(
+        "user"
+      );
+
+      set({
+
+        user: null,
+
+        token: null,
+
+        isAuthenticated: false,
+      });
+    },
+  })
+);
 
 export default useAuthStore;
